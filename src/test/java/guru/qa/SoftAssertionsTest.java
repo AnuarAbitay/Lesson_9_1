@@ -13,16 +13,18 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class SoftAssertionsTest {
     String selenideGitUrl = "https://github.com/selenide/selenide",
-           softAssertions = "Soft assertions",
+           softAssertions = "SoftAssertions",
            jUnitText = "3. Using JUnit5 extend test class:",
            dragAndDropUrl = "https://the-internet.herokuapp.com/drag_and_drop",
            aText = "A",
            bText = "B";
 
     SelenideElement wikiTab = $("#wiki-tab"),
+                    wikiPageFilter = $("#wiki-pages-filter"),
                     wikiBody = $("#wiki-body"),
                     columnA = $("#column-a"),
-                    columnB = $("#column-b");
+                    columnB = $("#column-b"),
+                    wikiPageFilterResult =  $("[data-filterable-for=wiki-pages-filter]");
 
 
 
@@ -30,9 +32,11 @@ public class SoftAssertionsTest {
     void assertionsTest() {
         open(selenideGitUrl);
         wikiTab.click();
-        wikiBody.shouldHave(text(softAssertions));
-        wikiBody.$(byText(selenideGitUrl)).click();
+        wikiPageFilter.setValue(softAssertions);
+        wikiPageFilterResult.shouldHave(text(softAssertions));
+        wikiPageFilterResult.$(byText(softAssertions)).click();
         wikiBody.$(byText(jUnitText)).shouldBe(visible);
+
     }
 
     @Test
